@@ -1,0 +1,14 @@
+<style>
+	.alert-style-1{
+		margin-left: -8px !important;
+		margin-right: -9px !important;
+		margin-bottom: 2px !important;
+	}
+
+	.table_row_btn a{
+		padding: 4px 8px;
+	}
+	.table_row_btn i{
+		padding-top: 5px;
+	}
+</style>
