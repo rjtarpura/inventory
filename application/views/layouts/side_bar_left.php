@@ -40,8 +40,16 @@
 			</ul>
 		</li>
 		<li>
-			<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr4" class="<?php echo ($current_page_url=='vendors/listing' || $current_page_url=='vendors/index' || $current_page_url=='vendors/add')?'active':'';?>"><div class="pull-left"><i class="zmdi zmdi-apps mr-20"></i><span class="right-nav-text">vendorss </span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+			<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr4" class="<?php echo ($current_page_url=='labels/consignment_label')?'active':'';?>"><div class="pull-left"><i class="zmdi zmdi-apps mr-20"></i><span class="right-nav-text">Label Print </span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 			<ul id="app_dr4" class="collapse collapse-level-1">				
+				<li>
+					<a href="<?php echo $base_url.'labels/consignment_label';?>" class="<?php echo ($current_page_url=='labels/consignment_label')?'active-page':'';?>">Consignment</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr5" class="<?php echo ($current_page_url=='vendors/listing' || $current_page_url=='vendors/index' || $current_page_url=='vendors/add')?'active':'';?>"><div class="pull-left"><i class="zmdi zmdi-apps mr-20"></i><span class="right-nav-text">vendorss </span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+			<ul id="app_dr5" class="collapse collapse-level-1">				
 				<li>
 					<a href="<?php echo $base_url.'vendors/add';?>" class="<?php echo ($current_page_url=='vendors/add')?'active-page':'';?>">Add vendors</a>
 				</li>

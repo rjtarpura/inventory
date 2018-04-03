@@ -48,6 +48,8 @@ class Orders extends My_Controller {
 
 		if($this->input->server('REQUEST_METHOD') == "POST"){
 
+			$this->debug($_POST);
+
 			$this->form_validation->set_rules($this->get_order_validation_rule());
 			
 			if($this->form_validation->run() === true){

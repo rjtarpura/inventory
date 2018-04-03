@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2018 at 08:22 PM
+-- Generation Time: Apr 03, 2018 at 09:45 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -134,14 +134,15 @@ CREATE TABLE IF NOT EXISTS `consignments` (
   `consignment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`consignment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `consignments`
 --
 
 INSERT INTO `consignments` (`consignment_id`, `vendor_id`, `consignment_date`, `create_date`) VALUES
-(2, 1, '2018-04-01 00:00:00', '2018-04-02 10:28:17');
+(2, 1, '2018-04-01 00:00:00', '2018-04-02 10:28:17'),
+(3, 2, '2018-04-01 00:00:00', '2018-04-03 05:34:18');
 
 -- --------------------------------------------------------
 
@@ -157,14 +158,20 @@ CREATE TABLE IF NOT EXISTS `consignments_detail` (
   `quantity` int(11) NOT NULL,
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `consignments_detail`
 --
 
 INSERT INTO `consignments_detail` (`id`, `consignment_id`, `product_id`, `tag_name`, `quantity`, `create_date`) VALUES
-(3, 2, 3, 'Deshee', 8, '2018-04-02 10:28:17');
+(3, 2, 3, 'Deshee', 8, '2018-04-02 10:28:17'),
+(4, 3, 1, 'Deshee', 11, '2018-04-03 05:34:18'),
+(5, 3, 2, 'Deshee', 21, '2018-04-03 05:34:18'),
+(6, 3, 3, 'WrappedIn', 32, '2018-04-03 05:34:18'),
+(7, 3, 1, 'WrappedIn', 12, '2018-04-03 05:34:18'),
+(8, 3, 3, 'Deshee', 31, '2018-04-03 05:34:18'),
+(9, 3, 2, 'WrappedIn', 22, '2018-04-03 05:34:18');
 
 -- --------------------------------------------------------
 
@@ -425,12 +432,12 @@ CREATE TABLE IF NOT EXISTS `stock` (
 --
 
 INSERT INTO `stock` (`id`, `product_id`, `tag_name`, `quantity`, `create_date`, `status`) VALUES
-(1, 1, 'Deshee', 14, '2018-04-02 09:38:20', 1),
-(2, 1, 'WrappedIn', 65, '2018-04-02 09:38:20', 1),
-(3, 2, 'Deshee', 0, '2018-04-02 09:49:46', 1),
-(4, 2, 'WrappedIn', 0, '2018-04-02 09:49:46', 1),
-(5, 3, 'Deshee', 10, '2018-04-02 09:52:39', 1),
-(6, 3, 'WrappedIn', 2, '2018-04-02 09:52:39', 1),
+(1, 1, 'Deshee', 25, '2018-04-02 09:38:20', 1),
+(2, 1, 'WrappedIn', 77, '2018-04-02 09:38:20', 1),
+(3, 2, 'Deshee', 21, '2018-04-02 09:49:46', 1),
+(4, 2, 'WrappedIn', 22, '2018-04-02 09:49:46', 1),
+(5, 3, 'Deshee', 41, '2018-04-02 09:52:39', 1),
+(6, 3, 'WrappedIn', 34, '2018-04-02 09:52:39', 1),
 (7, 4, 'Deshee', 10, '2018-04-02 09:56:57', 1),
 (8, 4, 'WrappedIn', 10, '2018-04-02 09:56:57', 1);
 

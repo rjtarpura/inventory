@@ -1,0 +1,2 @@
+https://www.sitepoint.com/generate-qr-codes-in-php/
+http://phpqrcode.sourceforge.net/

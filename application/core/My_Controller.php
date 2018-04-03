@@ -23,6 +23,7 @@ class MY_Controller extends CI_Controller{
 
 		// Configurable Variables
 			$product_photo = 'assets/public/images/products/';
+			$qr_code = 'assets/public/qr/';
 
 		// Set App Specific variables
 
@@ -34,10 +35,19 @@ class MY_Controller extends CI_Controller{
 			$this->data['base_url'] = $base_url;
 
 			$this->data['public_assets_url']	=	$base_url.'assets/public/plugins/';				
-			$this->data['product_no_image_url']	=	$base_url.'assets/public/avtars/no-product.png';			
-			$this->data['product_image_url']	=	$base_url.$product_photo;
-			$this->product_image_fs_url			=	$_SERVER['DOCUMENT_ROOT'].'/'.$project_root_folder_name.$product_photo;
+			$this->data['product_no_image_url']	=	$base_url.'assets/public/avtars/no-product.png';
+			
+			
+			$this->data['server_root_url']		=	$_SERVER['DOCUMENT_ROOT'].$project_root_folder_name;
+			
+			$this->product_image_fs_url			=	$_SERVER['DOCUMENT_ROOT'].$project_root_folder_name.$product_photo;
 			$this->data['product_image_fs_url']	=	$this->product_image_fs_url;
+			$this->data['product_image_url']	=	$base_url.$product_photo;
+			
+			$this->qr_image_fs_url				=	$_SERVER['DOCUMENT_ROOT'].$project_root_folder_name.$qr_code;
+			$this->data['qr_image_fs_url']		=	$this->qr_image_fs_url;
+			$this->data['qr_image_url']			=	$base_url.$qr_code;
+
 			$this->data['themes']				=	$this->get_theme_array();
 			$this->data['theme_primary_colors']	=	$this->get_theme_primary_color();
 			$this->data['module']				=	$this->router->fetch_class();

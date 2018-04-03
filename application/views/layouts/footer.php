@@ -17,7 +17,9 @@
 <!-- Select2 JavaScript -->
 <script src="<?php echo $public_assets_url.'vendors/bower_components/select2/dist/js/select2.full.min.js';?>"></script>
 
-
+<!-- Form Wizard JavaScript -->
+<script src="<?php echo $public_assets_url.'vendors/bower_components/jquery.steps/build/jquery.steps.min.js';?>"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 
 
 <!-- Slimscroll JavaScript -->

@@ -24,5 +24,10 @@
 <!-- select2 CSS -->
 <link href="<?php echo $public_assets_url.'vendors/bower_components/select2/dist/css/select2.min.css';?>" rel="stylesheet" type="text/css"/>
 
+<!-- jquery-steps css -->
+<link rel="stylesheet" href="<?php echo $public_assets_url.'vendors/bower_components/jquery.steps/demo/css/jquery.steps.css';?>">
+
+
+
 <!-- Custom CSS -->
 <link href="<?php echo $public_assets_url.'dist/css/style.css';?>" rel="stylesheet" type="text/css">

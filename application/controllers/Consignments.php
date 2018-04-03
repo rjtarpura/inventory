@@ -9,7 +9,7 @@ class Consignments extends My_Controller {
 	}
 
 	public function add(){
-
+		
 		$this->data["products"]		=	$this->model->get("products");
 		$this->data["vendors"]		=	$this->model->get("vendors");
 		
@@ -49,5 +49,30 @@ class Consignments extends My_Controller {
 									'rules'	=>	'required'
 							)
 					);
+	}
+
+	public function ajax_get_consignments_detail(){
+
+		$consignment_id = $this->input->post('consignment_id');
+
+		$data = $this->consignments_m->get_consignment_quantity("consignment_id = $consignment_id");
+		if($data){
+			echo json_encode($data);
+		}else{
+			echo json_encode(false);
+		}
+	}
+
+	public function ajax_get_consignments(){
+
+		$vendor_id = $this->input->post('vendor_id');
+		$consignment_date = $this->input->post('consignment_date');
+
+		$data = $this->model->getField("consignments","consignment_id","vendor_id = $vendor_id AND consignment_date = '$consignment_date'");
+		if($data){
+			echo json_encode($data);
+		}else{
+			echo json_encode(false);
+		}
 	}
 }

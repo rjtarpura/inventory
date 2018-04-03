@@ -37,7 +37,7 @@
 											</div> -->
 										</div>
 										<div class="form-group abc">
-											<label class="control-label mb-10" for="name">Recieve Date</label>
+											<label class="control-label mb-10" for="consignment_date">Recieve Date</label>
 											<input class="form-control datepicker" type="text" name="consignment_date">
 										</div>
 									</div>
