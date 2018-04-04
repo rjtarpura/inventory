@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2018 at 09:45 PM
+-- Generation Time: Apr 05, 2018 at 12:09 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -134,15 +134,15 @@ CREATE TABLE IF NOT EXISTS `consignments` (
   `consignment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`consignment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `consignments`
 --
 
 INSERT INTO `consignments` (`consignment_id`, `vendor_id`, `consignment_date`, `create_date`) VALUES
-(2, 1, '2018-04-01 00:00:00', '2018-04-02 10:28:17'),
-(3, 2, '2018-04-01 00:00:00', '2018-04-03 05:34:18');
+(1, 1, '2018-04-01 00:00:00', '2018-04-04 05:50:15'),
+(2, 2, '2018-04-01 00:00:00', '2018-04-04 11:35:38');
 
 -- --------------------------------------------------------
 
@@ -158,20 +158,19 @@ CREATE TABLE IF NOT EXISTS `consignments_detail` (
   `quantity` int(11) NOT NULL,
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `consignments_detail`
 --
 
 INSERT INTO `consignments_detail` (`id`, `consignment_id`, `product_id`, `tag_name`, `quantity`, `create_date`) VALUES
-(3, 2, 3, 'Deshee', 8, '2018-04-02 10:28:17'),
-(4, 3, 1, 'Deshee', 11, '2018-04-03 05:34:18'),
-(5, 3, 2, 'Deshee', 21, '2018-04-03 05:34:18'),
-(6, 3, 3, 'WrappedIn', 32, '2018-04-03 05:34:18'),
-(7, 3, 1, 'WrappedIn', 12, '2018-04-03 05:34:18'),
-(8, 3, 3, 'Deshee', 31, '2018-04-03 05:34:18'),
-(9, 3, 2, 'WrappedIn', 22, '2018-04-03 05:34:18');
+(1, 1, 1, 'DE', 3, '2018-04-04 05:50:15'),
+(2, 1, 2, 'WI', 5, '2018-04-04 05:50:15'),
+(3, 2, 1, 'DE', 10, '2018-04-04 11:35:38'),
+(4, 2, 1, 'WI', 5, '2018-04-04 11:35:38'),
+(5, 2, 2, 'WI', 8, '2018-04-04 11:35:38'),
+(6, 2, 2, 'DE', 9, '2018-04-04 11:35:38');
 
 -- --------------------------------------------------------
 
@@ -255,31 +254,12 @@ INSERT INTO `message_masters` (`message_id`, `message_code`, `subject`, `message
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `client_id` bigint(20) unsigned NOT NULL COMMENT '1 to m clients',
+  `customer_id` bigint(20) unsigned NOT NULL COMMENT '1 to m clients',
   `order_date` date NOT NULL,
-  `description` text,
-  `status` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '1-Active, 2-Inactive',
-  `processing_status` tinyint(3) unsigned NOT NULL DEFAULT '3' COMMENT '3-Pending, 4-Processing, 5-Done',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '3' COMMENT '3-Unshipped, 4-Shipped, 5-Cancel',
   `create_by` bigint(20) unsigned DEFAULT NULL COMMENT 'salesman''s identification who create this order',
-  `assigned_to` bigint(20) unsigned DEFAULT NULL,
-  `assign_date` date DEFAULT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `client_id`, `order_date`, `description`, `status`, `processing_status`, `create_by`, `assigned_to`, `assign_date`) VALUES
-(1, 1, '2018-03-01', NULL, 1, 4, 2, 2, '2018-03-01'),
-(2, 2, '2018-03-02', NULL, 1, 4, 2, 3, '2018-03-03'),
-(3, 3, '2018-03-03', NULL, 1, 5, 3, 1, '2018-03-13'),
-(5, 8, '2018-03-12', NULL, 1, 4, 2, 2, '2018-03-12'),
-(6, 2, '2018-03-01', NULL, 1, 4, 3, 4, '2018-03-05'),
-(7, 9, '2018-03-12', NULL, 1, 4, 2, 2, '2018-03-13'),
-(8, 10, '2018-03-13', NULL, 1, 3, NULL, NULL, NULL),
-(9, 11, '2018-03-13', NULL, 1, 4, NULL, 1, '2018-03-14'),
-(10, 12, '2018-03-14', NULL, 2, 5, NULL, 1, '2018-03-14');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -293,30 +273,7 @@ CREATE TABLE IF NOT EXISTS `orders_details` (
   `product_id` bigint(20) unsigned NOT NULL COMMENT '1 to m with products',
   `quantity` int(10) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`orders_details_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
-
---
--- Dumping data for table `orders_details`
---
-
-INSERT INTO `orders_details` (`orders_details_id`, `order_id`, `product_id`, `quantity`) VALUES
-(1, 1, 1, 22),
-(2, 2, 1, 111),
-(3, 3, 1, 313),
-(6, 3, 5, 500),
-(7, 5, 2, 12),
-(8, 5, 3, 123),
-(9, 6, 1, 5),
-(12, 7, 4, 444),
-(13, 7, 5, 555),
-(14, 8, 2, 222),
-(15, 8, 4, 444),
-(16, 9, 1, 111),
-(17, 9, 2, 222),
-(18, 7, 1, 100),
-(19, 7, 2, 100),
-(20, 10, 2, 34),
-(21, 7, 3, 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -335,17 +292,15 @@ CREATE TABLE IF NOT EXISTS `products` (
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`product_id`, `sku`, `sku_id`, `name`, `febric`, `photo`, `status`, `create_date`, `update_date`) VALUES
-(1, 'FIRST', 'FIRST-FW', 'first', 'FW', NULL, 1, '2018-04-02 09:38:20', '2018-04-02 16:38:20'),
-(2, 'SP', 'SP-FW', 'Second Product', 'FW', NULL, 1, '2018-04-02 09:49:46', '2018-04-02 16:49:46'),
-(3, 'TP', 'TP-FW', 'Third', 'FW', NULL, 1, '2018-04-02 09:52:39', '2018-04-02 16:52:39'),
-(4, 'FP', 'FP-PS', 'fourth', 'PS', NULL, 1, '2018-04-02 09:56:57', '2018-04-02 16:56:57');
+(1, 'FPS', 'XXXXXXXXFPS-FW', 'First Product', 'FW', 'd6ff5c9caf1649dc792cfed03431ae56.jpg', 1, '2018-04-04 05:48:28', '2018-04-04 20:44:02'),
+(2, 'SPS', 'SPS-PS', 'Second Product', 'PS', '566c23e95d836b5fdd1e7025f6c98bfe.jpg', 1, '2018-04-04 05:48:55', '2018-04-04 13:44:16');
 
 -- --------------------------------------------------------
 
@@ -383,7 +338,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 
 INSERT INTO `settings` (`id`, `email`, `contact`, `website_title`, `template_skin`, `logo_mini`, `logo_lg`, `smtp_email`, `smtp_pass`, `email_alias`, `autologout`, `autologout_mins`, `allowed_file_extensions`, `file_upload_size_bytes`, `notification_display_duration_ms`, `profile_pic_extensions`, `profile_pic_size_bytes`, `febrics`, `theme_name`, `theme_primary_color`, `tags`) VALUES
-(1, 'rakeshjangir.ehs@gmail.com', '9166650505', 'Zoop Inventory', 'skin-yellow', '<b>Zoop</b>', 'Zoop <b>Inventory</b>', 'rakeshjangir.ehs@gmail.com', 'abc@123_4', 'TaxPro', 13, 10, 'png|jpeg|jpg|gif|xls|xlsx|doc|docx|pdf', 2000000, '5000', 'jpg|jpeg|png', 1000000, 'Fine Wool-FW|Pure Silk-PS|Cotton Silk-CS|Cotton Modal-CM|Habotai Silk-HS|Silk & Wool-SW', 'theme-6-active', 'pimary-color-blue', 'Deshee|WrappedIn');
+(1, 'rakeshjangir.ehs@gmail.com', '9166650505', 'Zoop Inventory', 'skin-yellow', '<b>Zoop</b>', 'Zoop <b>Inventory</b>', 'rakeshjangir.ehs@gmail.com', 'abc@123_4', 'TaxPro', 13, 10, 'png|jpeg|jpg|gif|xls|xlsx|doc|docx|pdf', 2000000, '5000', 'jpg|jpeg|png', 1000000, 'Fine Wool-FW|Pure Silk-PS|Cotton Silk-CS|Cotton Modal-CM|Habotai Silk-HS|Silk & Wool-SW', 'theme-3-active', 'pimary-color-orange', 'Deshee-DE|WrappedIn-WI');
 
 -- --------------------------------------------------------
 
@@ -425,21 +380,17 @@ CREATE TABLE IF NOT EXISTS `stock` (
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '1-Active, 2-Inactive',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `stock`
 --
 
 INSERT INTO `stock` (`id`, `product_id`, `tag_name`, `quantity`, `create_date`, `status`) VALUES
-(1, 1, 'Deshee', 25, '2018-04-02 09:38:20', 1),
-(2, 1, 'WrappedIn', 77, '2018-04-02 09:38:20', 1),
-(3, 2, 'Deshee', 21, '2018-04-02 09:49:46', 1),
-(4, 2, 'WrappedIn', 22, '2018-04-02 09:49:46', 1),
-(5, 3, 'Deshee', 41, '2018-04-02 09:52:39', 1),
-(6, 3, 'WrappedIn', 34, '2018-04-02 09:52:39', 1),
-(7, 4, 'Deshee', 10, '2018-04-02 09:56:57', 1),
-(8, 4, 'WrappedIn', 10, '2018-04-02 09:56:57', 1);
+(1, 1, 'DE', 15, '2018-04-04 05:48:28', 1),
+(2, 1, 'WI', 8, '2018-04-04 05:48:28', 1),
+(3, 2, 'DE', 12, '2018-04-04 05:48:55', 1),
+(4, 2, 'WI', 17, '2018-04-04 05:48:55', 1);
 
 -- --------------------------------------------------------
 
