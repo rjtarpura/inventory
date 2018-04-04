@@ -10,7 +10,8 @@ class MY_Controller extends CI_Controller{
 								"login/index",
 								"login/login",
 								"login/logout",
-								"login/forgot"
+								"login/forgot",
+								"api/identify_product"
 								);
 	private $website_settings = array();
 
@@ -82,11 +83,12 @@ class MY_Controller extends CI_Controller{
 							)
 						);
 
+
 		// if(!in_array(uri_string(), $this->allowed_uri)) {
 		if($this->uri->segment(1) != "login"){
 
 			if(!$this->model->is_loged_in()){
-				
+
 				redirect("login");
 
 			}else{
@@ -108,10 +110,14 @@ class MY_Controller extends CI_Controller{
 				$this->user_role_sess = $this->session->_user_session["role"];
 				$this->data['user_role_sess'] = $this->user_role_sess;
 				$this->data['user_id_sess'] = $this->user_id_sess;
-				$this->data['febric_array']			=	$this->get_febric_array();
-				$this->data['tag_array']			=	$this->get_tag_array();
+				$this->data['febric_array']			=	$this->model->get_febric_array();
+				$this->data['tag_array']			=	$this->model->get_tag_array();
 				$this->data['current_theme']		=	$this->session->_settings['theme_name'];
 				$this->data['current_theme_primary_color']		=	$this->session->_settings['theme_primary_color'];
+
+				if(!$this->uri->segment(1)){
+					redirect($this->get_home_page());
+				}
 			}
 		}
 	}
@@ -133,25 +139,25 @@ class MY_Controller extends CI_Controller{
 		return ($this->user_role_sess == ADMIN)?true:false;
 	}
 
-	public function get_febric_array(){
-		$febric_arr = [];
-		$febric_list = explode('|',$this->session->_settings['febrics']);
-		foreach($febric_list as $fl){
-			$f = explode("-",$fl);
-			$febric_arr["$f[1]"] = $f[0];			
-		}
-		return $febric_arr;
-	}
+	// public function get_febric_array(){
+	// 	$febric_arr = [];
+	// 	$febric_list = explode('|',$this->session->_settings['febrics']);
+	// 	foreach($febric_list as $fl){
+	// 		$f = explode("-",$fl);
+	// 		$febric_arr["$f[1]"] = $f[0];			
+	// 	}
+	// 	return $febric_arr;
+	// }
 
-	public function get_tag_array(){
-		$tag_arr = [];
-		$tag_list = explode('|',$this->session->_settings['tags']);
-		foreach($tag_list as $k=>$t){
-			// $t = explode("-",$tl);
-			$tag_arr["$k"] = $t;
-		}
-		return $tag_arr;
-	}
+	// public function get_tag_array(){
+	// 	$tag_arr = [];
+	// 	$tag_list = explode('|',$this->session->_settings['tags']);
+	// 	foreach($tag_list as $k=>$tl){
+	// 		$t = explode("-",$tl);
+	// 		$tag_arr["$t[1]"] = $t[0];				
+	// 	}
+	// 	return $tag_arr;
+	// }
 
 	public function get_theme_array(){		
 		return array(

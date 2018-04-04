@@ -627,4 +627,38 @@ class Model extends CI_Model {
 
 		return json_encode($json_data);
 	}
+
+	public function get_febric_array(){
+		$febric_arr = [];
+		$febric_list = explode('|',$this->session->_settings['febrics']);
+		foreach($febric_list as $fl){
+			$f = explode("-",$fl);
+			$febric_arr["$f[1]"] = $f[0];			
+		}
+		return $febric_arr;
+	}
+
+	public function get_tag_array(){
+		$tag_arr = [];
+		$tag_list = explode('|',$this->session->_settings['tags']);
+		foreach($tag_list as $k=>$tl){
+			$t = explode("-",$tl);
+			$tag_arr["$t[1]"] = $t[0];				
+		}
+		return $tag_arr;
+	}
+
+	public function get_product_for_api($sku_id,$tag,$consignment_id){
+
+		$query = "SELECT
+					`products`.`name`,`products`.`photo`,`stock`.`quantity`,DATE_FORMAT(`consignments`.`consignment_date`,'%d-%m-%Y') AS `consignment_date`,`vendors`.`vendor_name`
+					FROM `products`
+					LEFT JOIN `stock` ON `products`.`product_id` = `stock`.`product_id`
+					LEFT JOIN `consignments` ON `consignments`.`consignment_id` = '$consignment_id'
+					LEFT JOIN `vendors` ON `vendors`.`vendor_id` = `consignments`.`vendor_id`
+					WHERE `products`.`sku_id`='$sku_id' AND `stock`.`tag_name`='$tag' AND `products`.`status` = ".ACTIVE;
+
+		$rs = $this->db->query($query);
+		return ($rs)?$rs->result_array():aray();
+	}
 }

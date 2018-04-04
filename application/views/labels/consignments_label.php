@@ -64,6 +64,7 @@
 														<tr>
 															<th>#</th>
 															<th>Product</th>
+															<th>Tag</th>
 															<th>Quantity</th>
 														</tr>
 													</thead>
@@ -94,8 +95,12 @@
 	<tr>
 		<td>r</td>
 		<td>
-			<input type="hidden"><p class="form-control-static"> John </p>
-		</td>		
+			<input type="hidden">
+			<p class="product_name form-control-static"></p>
+		</td>
+		<td>
+			<p class="product_tag form-control-static"></p>
+		</td>
 		<td>
 			<input type="text" class="numberonly" maxlength="3">
 		</td>
@@ -189,10 +194,13 @@
 											.clone()
 											.find(':input[type=hidden]')
 											.attr('name','details['+row_id+'][]')
-											.val(v.sku_id)												
+											.val(v.sku_id+"-"+v.tag_name+consignment_id)
 											.end()
-											.find('p')
+											.find('p.product_name')
 											.text(v.name)
+											.end()
+											.find('p.product_tag')
+											.text(v.tag_full_name)
 											.end()
 											.find(':input[type=text]')										
 											.attr('name','details['+row_id+'][]')

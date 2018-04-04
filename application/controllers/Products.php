@@ -28,12 +28,13 @@ class Products extends My_Controller {
 			// $this->debug($_POST,0);
 
 			$validation_rules = array();
-			if($product_id){
-				$validation_rules = $this->get_product_validation_rule_edit();
-			}else{
-				$validation_rules = $this->get_product_validation_rule_add();
-			}
-			
+
+			// if($product_id){
+			// 	$validation_rules = $this->get_product_validation_rule_edit();
+			// }else{
+			// 	$validation_rules = $this->get_product_validation_rule_add();
+			// }
+			$validation_rules = $this->get_product_validation_rule_add();
 			
 			$this->form_validation->set_rules($validation_rules);
 			
@@ -41,16 +42,19 @@ class Products extends My_Controller {
 				$child = array();
 
 				$dataToAdd["name"]	=	$this->input->post("name");
-				$dataToAdd["status"]=	$this->input->post("status");				
+				$dataToAdd["status"]=	$this->input->post("status");
+				$dataToAdd["sku"]	=	$this->input->post("sku");				
+				$dataToAdd["febric"]=	$this->input->post("febric");				
+				$dataToAdd["sku_id"]=	$this->input->post("sku_id");
 				
 				if(!$product_id){
-					$dataToAdd["sku"]	=	$this->input->post("sku");				
-					$dataToAdd["febric"]=	$this->input->post("febric");				
-					$dataToAdd["sku_id"]=	$this->input->post("sku_id");
+					// $dataToAdd["sku"]	=	$this->input->post("sku");				
+					// $dataToAdd["febric"]=	$this->input->post("febric");				
+					// $dataToAdd["sku_id"]=	$this->input->post("sku_id");
 
 					foreach($this->data['tag_array'] as $k=>$t){
-						$child["$k"]["quantity"]	=	($this->input->post("$t"))?$this->input->post("$t"):0;
-						$child["$k"]["tag_name"]	=	$t;
+						$child["$k"]["quantity"]	=	($this->input->post("$k"))?$this->input->post("$k"):0;
+						$child["$k"]["tag_name"]	=	$k;
 						$child["$k"]["status"]	=	ACTIVE;
 					}
 				}

@@ -1,0 +1,55 @@
+//PRODUCTS MODULE
+
+// While updating product confirm if there is no product already present with same sku_id, except the editing product.
+//or
+// client side validation for sku_id before submit
+// Should not update product if there are unshipped orders.
+
+
+// LABEL MODULE
+// search button infront of vendor combo box to easily search vendor
+// allow to search only by date or date range
+// validation for quantity textbox should not empty
+
+// CONSIGNMENT MODULE
+// search button infront of vendor combo box to easily search vendor
+// validation for quantity textbox should not empty
+// validation for combination of (product and tag) is unique
+
+
+recieve qr code
+
+->skuid
+
+
+
+<-
+photo link
+name
+#price
+
+
+->
+skuid
+quantity
+shipping address
+
+
+
+deduct inventory
+
+true/false
+
+qr code
+skuid tag consignmentid
+
+
+material vendor name date 
+
+
+SKu
+SUK-Febric_Code(2alpha)-Tag_Name(2alpha)ConsignmentId
+
+
+FPS-FW-DE1
+SPS-PS-WI1

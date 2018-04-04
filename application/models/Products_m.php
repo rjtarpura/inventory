@@ -36,7 +36,8 @@ class Products_m extends CI_Model {
 					`products`.*,GROUP_CONCAT(`stock`.`tag_name`,' - ',`stock`.`quantity`) AS `quantities`
 					FROM `products`
 					LEFT JOIN `stock` ON `products`.`product_id` = `stock`.`product_id`
-					GROUP BY `products`.`product_id`";
+					GROUP BY `products`.`product_id`
+					ORDER BY `products`.`sku_id` ASC, `stock`.`tag_name` ASC";
 		$rs = $this->db->query($query);
 
 		return ($rs)?$rs->result_array():array();

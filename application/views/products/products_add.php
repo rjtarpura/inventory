@@ -40,12 +40,12 @@ if($editing_product){
 												</div>
 												<div class="form-group <?php echo (form_error('sku'))?'has-error':''; ?>">
 													<label class="control-label mb-10" for="sku">SKU<span style="color:red;"> *</span></label>	
-													<input type="text" class="form-control skuid_affector capitalize" id="sku" name="sku" placeholder="SKU" value="<?php echo set_value('sku',($editing_product)?$editing_product['sku']:''); ?>" <?php echo ($editing_product)?'disabled':'';?>>
+													<input type="text" class="form-control skuid_affector capitalize" id="sku" name="sku" placeholder="SKU" value="<?php echo set_value('sku',($editing_product)?$editing_product['sku']:''); ?>">
 													<span class="help-block"><?php echo form_error('sku'); ?></span>
 												</div>
 												<div class="form-group <?php echo (form_error('febric'))?'has-error':''; ?>">
 													<label class="control-label mb-10" for="febric">Febric<span style="color:red;"> *</span></label>
-													<select name="febric" id= "febric" class="form-control select2 skuid_affector" style="width: 100%;" <?php echo ($editing_product)?'disabled':'';?> >
+													<select name="febric" id= "febric" class="form-control select2 skuid_affector" style="width: 100%;">
 														<?php
 															$febric = set_value('febric',($editing_product)?$editing_product['febric']:'');
 
@@ -75,10 +75,10 @@ if($editing_product){
 														<label for="quantity_check" id="quantity_check_lbl"> Initial Quantity </label>
 													</div>
 												</div> -->
-												<?php foreach($tag_array as $t):?>
+												<?php foreach($tag_array as $k=>$t):?>
 													<div class="form-group">
 														<!-- <label class="control-label mb-10" for="<?php echo $t?>"><?php echo $t?></label> -->
-														<input type="text" class="form-control numberonly" id="<?php echo $t?>" name="<?php echo $t?>" maxlength="3" placeholder="<?php echo $t?> Quantity" value="">
+														<input type="text" class="form-control numberonly" id="<?php echo $k?>" name="<?php echo $k?>" maxlength="3" placeholder="<?php echo $t?> Quantity" value="">
 													</div>
 												<?php endforeach;?>												
 												<?php endif;?>	

@@ -51,18 +51,6 @@ class Consignments extends My_Controller {
 					);
 	}
 
-	public function ajax_get_consignments_detail(){
-
-		$consignment_id = $this->input->post('consignment_id');
-
-		$data = $this->consignments_m->get_consignment_quantity("consignment_id = $consignment_id");
-		if($data){
-			echo json_encode($data);
-		}else{
-			echo json_encode(false);
-		}
-	}
-
 	public function ajax_get_consignments(){
 
 		$vendor_id = $this->input->post('vendor_id');
@@ -70,6 +58,21 @@ class Consignments extends My_Controller {
 
 		$data = $this->model->getField("consignments","consignment_id","vendor_id = $vendor_id AND consignment_date = '$consignment_date'");
 		if($data){
+			echo json_encode($data);
+		}else{
+			echo json_encode(false);
+		}
+	}
+
+	public function ajax_get_consignments_detail(){
+
+		$consignment_id = $this->input->post('consignment_id');
+
+		$data = $this->consignments_m->get_consignment_quantity("consignment_id = $consignment_id");
+		if($data){
+			foreach($data as $k=>$arr){
+				$data[$k]['tag_full_name'] = $this->data['tag_array']["{$arr['tag_name']}"];				
+			}
 			echo json_encode($data);
 		}else{
 			echo json_encode(false);

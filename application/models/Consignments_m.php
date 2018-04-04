@@ -43,12 +43,19 @@ class Consignments_m extends CI_Model {
 	}
 
 	public function get_consignment_quantity($where){
+		// $query	= "SELECT
+		// 			`products`.`sku_id`,`products`.`name`,SUM(`consignments_detail`.`quantity`) AS `quantity`
+		// 			FROM `consignments_detail`
+		// 			LEFT JOIN `products` ON `products`.`product_id` = `consignments_detail`.`product_id`";
+		// $query	.=	($where)?" WHERE ".$where:'';
+		// $query 	.= " GROUP BY `consignments_detail`.`product_id`";
+
 		$query	= "SELECT
-					`products`.`sku_id`,`products`.`name`,SUM(`consignments_detail`.`quantity`) AS `quantity`
+					`products`.`sku_id`,`products`.`name`,`consignments_detail`.`tag_name`,`consignments_detail`.`quantity`
 					FROM `consignments_detail`
 					LEFT JOIN `products` ON `products`.`product_id` = `consignments_detail`.`product_id`";
 		$query	.=	($where)?" WHERE ".$where:'';
-		$query 	.= " GROUP BY `consignments_detail`.`product_id`";
+		$query 	.= " ORDER BY `consignments_detail`.`product_id` ASC, `consignments_detail`.`tag_name` ASC";
 
 		$rs = $this->db->query($query);
 		return ($rs)?$rs->result_array():array();

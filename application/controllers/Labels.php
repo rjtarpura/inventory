@@ -10,8 +10,14 @@ class Labels extends My_Controller {
 	}
 
 	public function generate(){
-		// $this->debug($_POST);
+		// $this->debug($_POST,0);
 		$details = $this->input->post("details");
+		
+		// details =array(
+		// 				[0]	=>	'sku_id-tag_name-'
+		// 				[1]	=>	'quantity'
+		// 			)
+
 		$consignment_id =$this->input->post("consignment_id");
 
 		$qr_list = array();
@@ -19,17 +25,18 @@ class Labels extends My_Controller {
 		foreach($details as $k=>$arr){
 			$ec_level = "H";	//L,M,Q,H
 			$zoom_factor = 4;	//Pixel or Zoom Factor (Default:3) 1 to 10
-			$frame_size = 1;	//Fram around QR Code (Default:4)
+			$frame_size = 2;	//Fram around QR Code (Default:4)
 
-			$content = $arr[0].'#'.$consignment_id;
+			$content = $arr[0];	//.'~'.$consignment_id;	//sku_id~consignment_id
+
 			$qr_code_file = md5($content).'.png';
 			$qr_file_name = $this->qr_image_fs_url.$qr_code_file;
 
 			// if(!file_exists($qr_file_name)){
 				QRcode::png($content,$qr_file_name,$ec_level,$zoom_factor,$frame_size);
 			// }
-			for($i=0;$i<=$arr[1];$i++){
-				array_push($qr_list,array("sku_id"=>$arr[0],"file_name"=>$qr_code_file));
+			for($i=1;$i<=$arr[1];$i++){
+				array_push($qr_list,array("sku_id"=>$content,"file_name"=>$qr_code_file));
 			}
 		}
 		
@@ -47,6 +54,9 @@ class Labels extends My_Controller {
 	}
 
 	public function consignment_label(){
+
+		// redirect("api/identify_product?identifier=SPS-PS-WI1");exit;
+		
 		$this->data["vendors"]		=	$this->model->get("vendors");
 		$this->load_view('consignments_label');
 	}

@@ -52,7 +52,7 @@
 														// echo "<li>",$quant,"</li>";
 														$exp = explode(" - ",$quant);
 														$total += $exp[1];
-														echo "<tr>","<td>",$exp[0],"</td>","<td>",$exp[1],"</td>","</tr>";
+														echo "<tr>","<td>",$tag_array["$exp[0]"],"</td>","<td>",$exp[1],"</td>","</tr>";
 													}
 													echo "<tr>","<td>","TOTAL","</td>","<td>",$total,"</td>","</tr>";
 													echo "</table>";

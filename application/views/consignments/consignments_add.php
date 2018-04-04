@@ -95,9 +95,9 @@
 			<select class="form-control select2">
 				<?php															
 					echo "<option value=''>Select Tag</option>";
-					foreach($tag_array as $t){
+					foreach($tag_array as $k=>$t){
 						$selected = '';//($febric == $k)?"selected=\"selected\"":"";
-						echo "<option value=\"{$t}\" $selected>{$t}</option>";
+						echo "<option value=\"{$k}\" $selected>{$t}</option>";
 					}
 				?>
 			</select>
