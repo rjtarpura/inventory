@@ -19,7 +19,47 @@ $editing	=	(isset($editing))?$editing:'';
 			</div>
 			<div class="panel-wrapper collapse in">
 				<div class="panel-body">
-					
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group <?php echo (form_error('first_name'))?'has-error':''; ?>">
+								<label class="control-label col-md-3" for="first_name">First Name<span style="color:red;"> *</span></label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="<?php echo set_value('first_name',($editing)?$editing['first_name']:'');?>">
+									<span class="help-block"><?php echo form_error('first_name'); ?></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group <?php echo (form_error('last_name'))?'has-error':''; ?>">
+								<label class="control-label col-md-3" for="last_name">Last Name<span style="color:red;"> *</span></label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="<?php echo set_value('last_name',($editing)?$editing['last_name']:'');?>">
+									<span class="help-block"><?php echo form_error('last_name'); ?></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group <?php echo (form_error('email'))?'has-error':''; ?>">
+								<label class="control-label col-md-3" for="email">Email</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo set_value('email',($editing)?$editing['email']:'');?>">
+									<span class="help-block"><?php echo form_error('email'); ?></span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group <?php echo (form_error('contact'))?'has-error':''; ?>">
+								<label class="control-label col-md-3" for="contact">Contact</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="contact" name="contact" placeholder="Contact" value="<?php echo set_value('contact',($editing)?$editing['contact']:'');?>">
+									<span class="help-block"><?php echo form_error('contact'); ?></span>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>				
 			</div>
 		</div>

@@ -14,7 +14,7 @@ class Vendors extends My_Controller {
 	}
 
 	public function add($product_id=NULL){
-
+			
 		if($this->input->server('REQUEST_METHOD') == "POST"){
 			$this->debug($_POST);
 		}

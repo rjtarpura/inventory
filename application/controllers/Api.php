@@ -1,4 +1,4 @@
-<?php
+.<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
@@ -21,53 +21,75 @@ class Api extends CI_Controller {
 	}
 
 	public function identify_product(){
-		
-		$identifier		=	$this->input->get('identifier');
 
-		$sku_id			=	'';
-		$febric			=	'';
-		$tag			=	'';
-		$consignment_id	=	'';
-		$name			=	'';
+		// $headers = getallheaders();$this->serve_client($headers);	// Accessing header information
 
 		$result = array();
+		
+		if ($this->input->server('REQUEST_METHOD') == 'GET') {
 
-		if($identifier){
-			$identifier_arr = explode('-',$identifier);
-			$sku_id			=	$identifier_arr[0].'-'.$identifier_arr[1];
-			$febric			=	$identifier_arr[1];
-			$tag			=	substr($identifier_arr[2],0,2);
-			$consignment_id	=	substr($identifier_arr[2],2,1);
+			$this->verifyRequiredParams(array("identifier"));
 
-			// echo "Identifier ",$identifier,"<br/>","<pre>";print_r($identifier_arr);
-			// echo "sku_id ",$sku_id,"<br/>","febric ",$febric,"<br/>","tag ",$tag,"<br/>","consignment_id ",$consignment_id,"<br/>";exit;
-			
-			$rs = $this->model->get_product_for_api($sku_id,$tag,$consignment_id);
+			$identifier		=	$this->input->get('identifier');
 
-			if($rs){
-				$rs = $rs[0];
-				$data['product_name']	=	$rs['name'];				
-				$data['product_febric']	=	$this->model->get_febric_array()["$febric"];			
-				$data['product_tag']	=	$this->model->get_tag_array()["$tag"];
-				$data['product_photo']	=	$this->product_image_url.$rs['photo'];
-				$data['product_stock']	=	$rs['quantity'];
+			$sku_id			=	'';
+			$febric			=	'';
+			$tag			=	'';
+			$consignment_id	=	'';
+			$name			=	'';
 
-				$data['consignment_id']	=	$consignment_id;
-				$data['consignment_date']	=	$rs['consignment_date'];
-				$data['vendor_name']	=	$rs['vendor_name'];				
+			if($identifier){
 
-				$result['error']	=	FALSE;
-				$result['message']	=	"Product Found";
-				$result['data']		=	$data;
+				if(preg_match("/^[A-Za-z]{3,}\-[A-Za-z]{2}\-[A-Za-z]{2}[0-9]+/", $identifier)){
 
+					$identifier_arr = 	explode('-',$identifier);
+					$sku_id			=	$identifier_arr[0].'-'.$identifier_arr[1];
+					$febric			=	$identifier_arr[1];
+					$tag			=	substr($identifier_arr[2],0,2);
+					$consignment_id	=	substr($identifier_arr[2],2,1);
+
+					// echo "Identifier ",$identifier,"<br/>","<pre>";print_r($identifier_arr);
+					// echo "sku_id ",$sku_id,"<br/>","febric ",$febric,"<br/>","tag ",$tag,"<br/>","consignment_id ",$consignment_id,"<br/>";exit;
+					
+					$rs = $this->model->get_product_for_api($sku_id,$tag,$consignment_id);
+
+					if($rs){
+						$rs = $rs[0];
+						$data['product_name']	=	$rs['name'];				
+						$data['product_febric']	=	$this->model->get_febric_array()["$febric"];			
+						$data['product_tag']	=	$this->model->get_tag_array()["$tag"];
+						$data['product_photo']	=	$this->product_image_url.$rs['photo'];
+						$data['product_stock']	=	$rs['quantity'];
+
+						$data['consignment_id']	=	$consignment_id;
+						$data['consignment_date']	=	$rs['consignment_date'];
+						$data['vendor_name']	=	$rs['vendor_name'];				
+
+						$result['error']	=	FALSE;
+						$result['message']	=	"Product Found";
+						$result['data']		=	$data;
+
+					}else{
+						$result['error']	=	TRUE;
+						$result['message']	=	"Product not Found";
+						$result['data']		=	array();
+					}
+				}else{
+					$this->status_code	=	400;$this->status_msg	=	"Bad Request";
+
+					$result['error']	=	TRUE;
+					$result['message']	=	"Invalid Request";
+					$result['data']		=	array();
+				}
 			}else{
+
+				$this->status_code	=	400;$this->status_msg	=	"Bad Request";
+
 				$result['error']	=	TRUE;
-				$result['message']	=	"Product not Found";
+				$result['message']	=	"Invalid Request";
 				$result['data']		=	array();
 			}
-
 		}else{
-
 			$this->status_code	=	400;$this->status_msg	=	"Bad Request";
 
 			$result['error']	=	TRUE;
@@ -134,11 +156,33 @@ class Api extends CI_Controller {
 	}
 
 	public function serve_client($content){
-
-		// echo "<pre>";print_r($result);exit;
 		header("Content-Type : application/json");
 		header("HTTP/1.1 $this->status_code $this->status_msg");
 		echo json_encode($content);
-
+		exit;
 	}
+
+	public function verifyRequiredParams($required_fields) {
+
+        $error = false;
+        $error_fields = "";
+        $request_params = array();
+        $request_params = $_REQUEST;
+       
+        foreach ($required_fields as $field) {
+            if (!isset($request_params[$field]) || strlen(trim($request_params[$field])) <= 0) {
+                $error = true;
+                $error_fields .= $field . ', ';
+            }
+        }
+
+        if ($error) {
+
+            $response = array();
+            $response["error"] = true;
+            $response["message"] = 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty';
+
+            $this->serve_client($response);
+        }
+    }
 }
