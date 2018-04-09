@@ -21,17 +21,17 @@ class Consignments extends My_Controller {
 				$data["vendor_id"]	=	$this->input->post("vendor_id");
 				$data["consignment_date"]	=	$this->input->post("consignment_date");
 				$details	=	$this->input->post("details");
-			}
 
-			$rs = $this->consignments_m->add($data,$details);			
+				$rs = $this->consignments_m->add($data,$details);			
 
-			if($rs){
-				$this->session->set_flashdata("success",$this->lang->line('consignment_add_success'));
+				if($rs){
+					$this->session->set_flashdata("success",$this->lang->line('consignment_add_success'));
 
-			}else{
-				$this->session->set_flashdata("error",$this->lang->line('consignment_add_error'));
-			}
-			redirect('consignments/add');
+				}else{
+					$this->session->set_flashdata("error",$this->lang->line('consignment_add_error'));
+				}
+				redirect('consignments/add');
+			}		
 		}
 		$this->load_view('consignments_add');
 	}

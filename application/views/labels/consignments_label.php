@@ -30,7 +30,7 @@
 										<div class="form-group">
 											<label class="control-label mb-10" for="name">Vendor</label>
 											<!-- <div class="input-group mb-15"> -->
-												<select class="form-control select2" id="vendor_id">
+												<select class="form-control select2" id="vendor_id" name="vendor_id">
 													<option value=''>Select Vendor</option>
 													<?php															
 														foreach($vendors as $vendor_array){
@@ -43,7 +43,7 @@
 										</div>
 										<div class="form-group">
 											<label class="control-label mb-10" for="consignment_date">Recieve Date</label>
-											<input class="form-control datepicker" type="text" id="consignment_date">
+											<input class="form-control datepicker" type="text" id="consignment_date" name="consignment_date">
 										</div>
 										<div class="form-group">					
 											<a href="javascript:void(0)" id="fetch_consignment" class="btn btn-success btn-xs btn-block">Fetch</a>

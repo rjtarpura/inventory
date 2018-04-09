@@ -19,6 +19,10 @@ class Labels extends My_Controller {
 		// 			)
 
 		$consignment_id =$this->input->post("consignment_id");
+		$helper_data = array();
+		$helper_data['vendor_id'] = $this->input->post("vendor_id");
+		$helper_data['consignment_id'] = $this->input->post("consignment_id");
+		$helper_data['consignment_date'] = $this->input->post("consignment_date");
 
 		$qr_list = array();
 
@@ -50,7 +54,10 @@ class Labels extends My_Controller {
 		// (Zoom Factor * (17+8=25))+ (Fram Size * Zoom Factor * 2)
 		
 		// $this->load->view('labels/consignments_label_print2',$this->data);
-		$this->print_label($qr_list);
+		$vendor = $this->model->getField("vendors","vendor_name","vendor_id = '".$helper_data['vendor_id']."'");
+		$helper_data['vendor_name'] = ($vendor)?$vendor[0]['vendor_name']:'';
+
+		$this->print_label($qr_list,$helper_data);
 		// $this->load_view('consignments_label_print');
 	}
 
@@ -62,21 +69,16 @@ class Labels extends My_Controller {
 		$this->load_view('consignments_label');
 	}
 
-	public function print_label($data){
+	public function print_label($data,$helper_data){
 
 		// $this->debug($data,0);
 		// require_once (realpath('tcpdf/tcpdf.php'));
 
-		include APPPATH.'third_party/tcpdf/tcpdf.php';
+		include APPPATH.'third_party/tcpdf/label_tcpdf.php';
 
 		// create new PDF document
 		$orientation = 'L';
-		$pdf = new TCPDF($orientation, 'pt', 'A4', true, 'UTF-8', false);
-
-		// remove default header/footer
-		$pdf->setPrintHeader(false);
-		$pdf->setPrintFooter(false);
-		// $pdf->SetFooterMargin(5.08);
+		$pdf = new label_tcpdf($orientation, 'pt', 'A4', true, 'UTF-8', false);
 
 		//set default monospaced font
 		$pdf->SetDefaultMonospacedFont('courier');
@@ -84,9 +86,15 @@ class Labels extends My_Controller {
 		// set margins
 		$left_margin = 36;
 		$right_margin = $left_margin;
-		$top_margin = 15;
+		$top_margin = 20;
 		$bottom_margin = $top_margin;	
 		$pdf->SetMargins($left_margin, $top_margin, $right_margin,true);
+
+		// remove default header/footer
+		// $pdf->setPrintHeader(false);
+		$pdf->set_footer_string('[ Cons. Id - '.$helper_data['consignment_id'].', Vendor : '.$helper_data['vendor_id'].' - '.$helper_data['vendor_name'].', Con. Dt. - '.date('d-M-Y',strtotime($helper_data['consignment_date'])).', Print Date - '.date('d-M-Y').', Label Count - '.count($data). ' ]');
+		$pdf->setPrintFooter(false);
+		// $pdf->SetFooterMargin($bottom_margin);
 
 		// set auto page breaks
 		$pdf->SetAutoPageBreak(TRUE, $bottom_margin);
@@ -138,17 +146,17 @@ class Labels extends My_Controller {
 
 					// $style .= "border: 1px dashed black;";
 					if($i%2==0){
-						$style .= "background-color:gray;";
+						// $style .= "background-color:gray;";
 					}else{
-						$style .= "background-color:pink;";
+						// $style .= "background-color:pink;";
 					}
-					$pitch_style .= "background-color:pink;";
+					// $pitch_style .= "background-color:pink;";
 
 					if($lbl_start==0){
 						$txt .= "<td style=\"$style\">
 									<table border=\"0\" align=\"center\">
 									<tr>
-										<td>DESHEE</td>
+										<td></td>
 									</tr>
 									<tr>
 										<td>
@@ -181,6 +189,6 @@ class Labels extends My_Controller {
 		$txt .= "</table>";		
 
 		$pdf->WriteHTML($txt, false, false, false, false, 'L');
-		$pdf->Output('example_001.pdf', 'I');
+		$pdf->Output($helper_data['vendor_name'].'-'.date('Y-m-d',strtotime($helper_data['consignment_date'])).'.pdf', 'I');
 	}
 }
